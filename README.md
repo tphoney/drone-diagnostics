@@ -1,13 +1,17 @@
+# drone-diagnostics
+
 A plugin to cli tools to diagnose issues in a build.
 
-# Usage
+## Usage
 
 This plugin has a number of diagnosic tools installed, use the command syntax to access them.
 
 Installed tools:
-ping, tracroute
 
-## Example 1
+- ping
+- tracroute
+
+### Example 1
 
 The below example skips the implicit clone step. Then displays the environment variables, then checks access to github. With ping and traceroute.
 
@@ -29,14 +33,13 @@ steps:
     - echo "end of test"
 ```
 
-## Example 2 
+### Example 2
 
 If the ftp upload fails, check connectivity to the ftp server. Useful for flakey networks.
 
 ```yaml
 kind: pipeline
 name: default
-
 
 steps:
 - name: upload to ftp server
@@ -54,14 +57,7 @@ steps:
     - failure
 ```
 
-Build the plugin image:
-
-```text
-docker build -t tphoney/drone-diagnostics -f docker/Dockerfile .
-```
-
-# Testing
-
+## Building
 
 Build the plugin image:
 
@@ -69,7 +65,7 @@ Build the plugin image:
 docker build -t tphoney/drone-diagnostics -f docker/Dockerfile .
 ```
 
-# Testing
+## Testing
 
 Execute the plugin from your current working directory:
 

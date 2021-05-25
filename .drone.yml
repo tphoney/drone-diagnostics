@@ -1,14 +1,22 @@
 kind: pipeline
-type: docker
 name: default
+type: docker
 
-- name: publish
+steps:
+- name: build plugin
   image: plugins/docker
   settings:
     repo: tphoney/drone-diagnostics
-    auto_tag: true
     dockerfile: docker/Dockerfile
-    username:
-      from_secret: docker_username
+    username: tphoney
     password:
       from_secret: docker_password
+    # docker build -t tphoney/drone-diagnostics -f docker/Dockerfile .
+- name: run tphoney/drone-diagnostics plugin
+  image: tphoney/drone-diagnostics
+  pull: if-not-exists
+  commands:
+    - env
+    - ping www.github.com -w 5
+    - traceroute -T -p 443 www.github.com
+    - echo "end of test"
