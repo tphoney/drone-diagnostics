@@ -9,7 +9,7 @@ This plugin has a number of diagnosic tools installed, use the command syntax to
 Installed tools:
 
 - ping
-- tracroute
+- traceroute
 
 ### Example 1
 
