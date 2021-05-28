@@ -3,20 +3,46 @@ name: default
 type: docker
 
 steps:
-- name: build plugin
+- name: build plugin for test
   image: plugins/docker
   settings:
-    repo: tphoney/drone-diagnostics
+    repo: plugins/drone-diagnostics
     dockerfile: docker/Dockerfile
-    username: tphoney
+    username:
+      from_secret: docker_username
     password:
       from_secret: docker_password
-    # docker build -t tphoney/drone-diagnostics -f docker/Dockerfile .
-- name: run tphoney/drone-diagnostics plugin
-  image: tphoney/drone-diagnostics
-  pull: if-not-exists
+    tags: ${DRONE_COMMIT}
+- name: run plugins/drone-diagnostics plugin
+  image: plugins/drone-diagnostics:${DRONE_COMMIT}
   commands:
     - env
     - ping www.github.com -w 5
     - traceroute -T -p 443 www.github.com
     - echo "end of test"
+
+trigger:
+  event:
+    exclude:
+      - tag
+
+---
+kind: pipeline
+name: publish
+type: docker
+
+steps:
+- name: build plugin for test
+  image: plugins/docker
+  settings:
+    repo: plugins/drone-diagnostics
+    dockerfile: docker/Dockerfile
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    auto_tag: true
+
+trigger:
+  event:
+    - tag
