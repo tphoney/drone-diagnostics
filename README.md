@@ -23,8 +23,8 @@ clone:
   disable: true
 
 steps:
-- name: run tphoney/drone-diagnostics plugin
-  image: tphoney/drone-diagnostics
+- name: run plugins/drone-diagnostics plugin
+  image: plugins/drone-diagnostics
   pull: if-not-exists
   commands:
     - env
@@ -46,8 +46,8 @@ steps:
   image: alpine
   commands:
     - echo 'ftp rules' # perform some ftp commands
-- name: run tphoney/drone-diagnostics plugin
-  image: tphoney/drone-diagnostics
+- name: run plugins/drone-diagnostics plugin
+  image: plugins/drone-diagnostics
   pull: if-not-exists
   commands:
     - ping ftp.server
@@ -62,5 +62,5 @@ steps:
 Build the plugin image:
 
 ```text
-docker build -t tphoney/drone-diagnostics -f docker/Dockerfile .
+docker build -t plugins/drone-diagnostics -f docker/Dockerfile .
 ```
