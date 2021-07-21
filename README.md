@@ -1,6 +1,6 @@
 # drone-diagnostics
 
-A plugin with cli tools to diagnose issues in a build.
+A plugin with cli tools to diagnose issues in a build. Available here `https://hub.docker.com/r/plugins/drone-diagnostics`
 
 ## Usage
 
