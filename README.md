@@ -10,6 +10,7 @@ Installed tools:
 
 - ping
 - traceroute
+- dig
 
 ### Example 1
 
@@ -30,6 +31,7 @@ steps:
     - env
     - ping www.github.com -w 5
     - traceroute -T -p 443 www.github.com
+    - dig www.apple.com
     - echo "end of test"
 ```
 
