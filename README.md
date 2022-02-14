@@ -9,7 +9,8 @@ This plugin has a number of diagnosic tools installed, use the command syntax to
 Installed tools:
 
 - ping
-- tracroute
+- traceroute
+- dig
 
 ### Example 1
 
@@ -30,6 +31,7 @@ steps:
     - env
     - ping www.github.com -w 5
     - traceroute -T -p 443 www.github.com
+    - dig www.apple.com
     - echo "end of test"
 ```
 
