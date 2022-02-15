@@ -3,36 +3,7 @@ name: default
 type: docker
 
 steps:
-- name: build plugin for test
-  image: plugins/docker
-  settings:
-    repo: plugins/drone-diagnostics
-    dockerfile: docker/Dockerfile
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    tags: ${DRONE_COMMIT}
-- name: run plugins/drone-diagnostics plugin
-  image: plugins/drone-diagnostics:${DRONE_COMMIT}
-  commands:
-    - env
-    - ping www.github.com -w 5
-    - traceroute -T -p 443 www.github.com
-    - echo "end of test"
-
-trigger:
-  event:
-    exclude:
-      - tag
-
----
-kind: pipeline
-name: publish
-type: docker
-
-steps:
-- name: build plugin for test
+- name: release plugin
   image: plugins/docker
   settings:
     repo: plugins/drone-diagnostics
@@ -46,3 +17,4 @@ steps:
 trigger:
   event:
     - tag
+    - refs/heads/master
