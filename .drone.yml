@@ -17,4 +17,4 @@ steps:
 trigger:
   event:
     - tag
-    - refs/heads/master
+    - refs/heads/main
