@@ -1,7 +1,35 @@
 kind: pipeline
 name: default
-type: docker
+type: vm
 
+platform:
+  os: linux
+  arch: amd64
+pool:
+  use: ubuntu
+
+steps:
+- name: release plugin
+  image: plugins/docker
+  settings:
+    repo: plugins/drone-diagnostics
+    dockerfile: docker/Dockerfile
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    auto_tag: true
+
+---
+kind: pipeline
+type: docker
+name: linux-arm64
+platform:
+  os: linux
+  arch: arm64
+pool:
+  use: ubuntu_arm64
+  
 steps:
 - name: release plugin
   image: plugins/docker
