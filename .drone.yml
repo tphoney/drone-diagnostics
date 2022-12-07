@@ -1,22 +1,43 @@
 kind: pipeline
 name: default
-type: docker
+type: vm
+
+platform:
+  os: linux
+  arch: amd64
+pool:
+  use: ubuntu
 
 steps:
-- name: build plugin
+- name: release plugin
   image: plugins/docker
   settings:
-    repo: tphoney/drone-diagnostics
+    repo: plugins/drone-diagnostics
     dockerfile: docker/Dockerfile
-    username: tphoney
+    username:
+      from_secret: docker_username
     password:
       from_secret: docker_password
-    # docker build -t tphoney/drone-diagnostics -f docker/Dockerfile .
-- name: run tphoney/drone-diagnostics plugin
-  image: tphoney/drone-diagnostics
-  pull: if-not-exists
-  commands:
-    - env
-    - ping www.github.com -w 5
-    - traceroute -T -p 443 www.github.com
-    - echo "end of test"
+    auto_tag: true
+
+---
+kind: pipeline
+type: docker
+name: linux-arm64
+platform:
+  os: linux
+  arch: arm64
+pool:
+  use: ubuntu_arm64
+  
+steps:
+- name: release plugin
+  image: plugins/docker
+  settings:
+    repo: plugins/drone-diagnostics
+    dockerfile: docker/Dockerfile
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    auto_tag: true
